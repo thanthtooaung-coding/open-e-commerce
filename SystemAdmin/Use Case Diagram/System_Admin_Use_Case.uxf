@@ -7,7 +7,7 @@
       <x>410</x>
       <y>90</y>
       <w>340</w>
-      <h>560</h>
+      <h>480</h>
     </coordinates>
     <panel_attributes>E-Commerce Platform
 halign=center</panel_attributes>
@@ -71,31 +71,8 @@ halign=center</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>500</x>
-      <y>500</y>
-      <w>160</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>Manage
-Announcements</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>320</x>
-      <y>340</y>
-      <w>200</w>
-      <h>200</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;10.0;180.0;180.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
       <x>510</x>
-      <y>570</y>
+      <y>500</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -108,10 +85,10 @@ Announcements</panel_attributes>
       <x>320</x>
       <y>340</y>
       <w>210</w>
-      <h>270</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;190.0;250.0</additional_attributes>
+    <additional_attributes>10.0;10.0;190.0;180.0</additional_attributes>
   </element>
   <element>
     <id>UMLUseCase</id>
