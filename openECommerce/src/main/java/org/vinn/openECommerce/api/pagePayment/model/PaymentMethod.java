@@ -1,4 +1,4 @@
-package org.vinn.openECommerce.api.payment.model;
+package org.vinn.openECommerce.api.pagePayment.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,4 +14,10 @@ public class PaymentMethod {
 
     @Column(length = 45)
     private String name;
+
+    public PaymentMethod() {}
+
+    public PaymentMethod(String name) {
+        this.name = name;
+    }
 }
