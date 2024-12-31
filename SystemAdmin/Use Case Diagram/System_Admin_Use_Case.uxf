@@ -16,12 +16,12 @@ halign=center</panel_attributes>
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>270</x>
+      <x>240</x>
       <y>310</y>
-      <w>60</w>
+      <w>120</w>
       <h>110</h>
     </coordinates>
-    <panel_attributes>Admin</panel_attributes>
+    <panel_attributes>System Admin</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
