@@ -39,6 +39,9 @@ public class Page {
     @LastModifiedDate
     private Instant updatedAt;
 
+    @Column(nullable = false)
+    private boolean active;
+
     @OneToOne
     @JoinColumn(name = "page_owner_id")
     private PageOwner pageOwner;
