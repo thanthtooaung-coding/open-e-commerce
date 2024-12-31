@@ -24,6 +24,9 @@ public class SystemAdminServiceImpl extends BaseUserServiceImpl<SystemAdmin, Sys
     @Value("${system.admin.image-url}")
     private String systemAdminImageURL;
 
+    @Value("${system.admin.password}")
+    private String staffPassword;
+
     public SystemAdminServiceImpl(SystemAdminRepository repository,
                                   ModelMapper modelMapper,
                                   PasswordEncoderService passwordEncoderService,
@@ -35,7 +38,7 @@ public class SystemAdminServiceImpl extends BaseUserServiceImpl<SystemAdmin, Sys
 
     @Override
     protected void initializeNewUser(SystemAdmin userEntity) {
-        userEntity.setPassword(passwordEncoderService.encode("Admin123!@#"));
+        userEntity.setPassword(passwordEncoderService.encode(staffPassword));
         userEntity.setEnabled(true);
 
         String uniqueUsername = generateUniqueUsername(userEntity.getName());
