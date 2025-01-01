@@ -37,8 +37,4 @@ public class Announcement {
     @ManyToOne
     @JoinColumn(name = "page_id")
     private Page page;
-
-    @ManyToOne
-    @JoinColumn(name = "page_owner_id")
-    private PageOwner pageOwner;
 }

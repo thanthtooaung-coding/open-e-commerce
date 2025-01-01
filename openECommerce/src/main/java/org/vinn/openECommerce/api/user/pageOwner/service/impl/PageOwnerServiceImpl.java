@@ -24,6 +24,9 @@ public class PageOwnerServiceImpl extends BaseUserServiceImpl<PageOwner, PageOwn
     @Value("${page.owner.image-url}")
     private String pageOwnerImageURL;
 
+    @Value("${page.owner.password}")
+    private String pageOwnerPassword;
+
     public PageOwnerServiceImpl(PageOwnerRepository repository,
                                 ModelMapper modelMapper,
                                 PasswordEncoderService passwordEncoderService,
@@ -35,7 +38,7 @@ public class PageOwnerServiceImpl extends BaseUserServiceImpl<PageOwner, PageOwn
 
     @Override
     protected void initializeNewUser(PageOwner userEntity) {
-        userEntity.setPassword(passwordEncoderService.encode("Admin123!@#"));
+        userEntity.setPassword(passwordEncoderService.encode(pageOwnerPassword));
         userEntity.setEnabled(true);
 
         String uniqueUsername = generateUniqueUsername(userEntity.getName());
