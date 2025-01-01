@@ -61,6 +61,6 @@ public class Product {
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 }
