@@ -11,7 +11,7 @@ import org.vinn.openECommerce.api.product.service.ProductService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("${api.base.path}/products")
 public class ProductController {
 
     private final ProductService productService;
