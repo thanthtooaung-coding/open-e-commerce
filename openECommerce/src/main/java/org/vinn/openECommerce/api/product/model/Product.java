@@ -6,12 +6,14 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.vinn.openECommerce.api.orderItem.model.OrderItem;
 import org.vinn.openECommerce.api.page.model.Page;
 import org.vinn.openECommerce.api.productCategory.model.ProductCategory;
 import org.vinn.openECommerce.api.user.staff.model.Staff;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -58,4 +60,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "staff_id")
     private Staff staff;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 }
