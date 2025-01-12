@@ -21,6 +21,8 @@ public class PageDTO {
 
     private Long pageOwnerId;
 
+    private String pageOwnerName;
+
     private Instant createdAt;
 
     private Instant updatedAt;
