@@ -32,8 +32,7 @@ public class Page {
     private String imageUrl;
 
     @Column(nullable = false, updatable = false)
-    @CreatedDate
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
     @Column(insertable = false)
     @LastModifiedDate

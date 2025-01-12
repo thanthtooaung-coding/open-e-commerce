@@ -16,6 +16,10 @@ import org.vinn.openECommerce.api.pagePayment.dto.PagePaymentDTO;
 import org.vinn.openECommerce.api.pagePayment.service.PagePaymentService;
 import org.vinn.openECommerce.exception.DuplicateEntityException;
 
+import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 public class PageServiceImpl implements PageService {
@@ -39,23 +43,27 @@ public class PageServiceImpl implements PageService {
         validatePageNameUniqueness(pageDto.getName());
 
         Page pageEntity = modelMapper.map(pageDto, Page.class);
+        pageEntity.setCreatedAt(Instant.now());
+        pageEntity.setActive(true);
+
+        String generatedUrl = urlGenerator.generateUrl(pageDto.getShortName());
+        pageEntity.setUrl(generatedUrl);
         Page savedPage = pageRepository.save(pageEntity);
 
-        String generatedUrl = urlGenerator.generateUrl(pageDto.getShortName(), savedPage.getId());
-        savedPage.setUrl(generatedUrl);
-
-        Page updatedPage = pageRepository.save(savedPage);
-
         AddPagePaymentRequest pagePaymentDto = new AddPagePaymentRequest();
-        pagePaymentDto.setPageOwner(updatedPage.getPageOwner());
+        pagePaymentDto.setPageOwner(savedPage.getPageOwner());
         PagePaymentDTO pagePaymentDTO = pagePaymentService.createPagePayment(pagePaymentDto);
         if (pagePaymentDTO != null) {
-            SystemAdminAuditLogDTO systemAdminAuditLogDTO = new SystemAdminAuditLogDTO("Page Created", SystemAdminAuditLogEntityType.PAGE, updatedPage.getId().toString());
+            SystemAdminAuditLogDTO systemAdminAuditLogDTO = new SystemAdminAuditLogDTO(
+                    "Page Created",
+                    SystemAdminAuditLogEntityType.PAGE,
+                    savedPage.getId().toString()
+            );
             systemAdminAuditLogService.createSystemAdminAuditLog(systemAdminAuditLogDTO);
             log.atDebug().log("Created new payment for page {}", pageDto.getName());
         }
 
-        return modelMapper.map(updatedPage, PageDTO.class);
+        return modelMapper.map(savedPage, PageDTO.class);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class PageServiceImpl implements PageService {
         modelMapper.map(pageDto, existingPage);
 
         if (!existingPage.getShortName().equals(pageDto.getShortName())) {
-            String updatedUrl = urlGenerator.generateUrl(pageDto.getShortName(), existingPage.getId());
+            String updatedUrl = urlGenerator.generateUrl(pageDto.getShortName());
             existingPage.setUrl(updatedUrl);
         }
 
@@ -86,6 +94,14 @@ public class PageServiceImpl implements PageService {
         Page page = pageRepository.findByUrl(url)
                 .orElseThrow(() -> new IllegalArgumentException("Page with URL '" + url + "' not found"));
         return modelMapper.map(page, PageDTO.class);
+    }
+
+    @Override
+    public List<PageDTO> getPages() {
+        return pageRepository.findAll()
+                .stream()
+                .map(page -> modelMapper.map(page, PageDTO.class))
+                .collect(Collectors.toList());
     }
 
     private void validatePageNameUniqueness(String name) {

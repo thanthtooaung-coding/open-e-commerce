@@ -8,6 +8,7 @@ import org.vinn.openECommerce.api.page.dto.PageDTO;
 import org.vinn.openECommerce.api.page.service.PageService;
 
 import java.net.URI;
+import java.util.List;
 
 /**
  * Controller for managing Page resources.
@@ -27,7 +28,7 @@ public class PageController {
      * @return ResponseEntity containing the created Page resource.
      */
     @PostMapping
-    public ResponseEntity<PageDTO> createPage(@Valid @RequestBody PageDTO pageDto) {
+    public ResponseEntity<PageDTO> createPage( @RequestBody PageDTO pageDto) {
         PageDTO createdPage = pageService.createPage(pageDto);
         URI location = URI.create(String.format("/api/v1/pages/%s", createdPage.getId()));
         return ResponseEntity.created(location).body(createdPage);
@@ -52,6 +53,12 @@ public class PageController {
     public ResponseEntity<PageDTO> getPage(@PathVariable String url) {
         PageDTO pageDto = pageService.getPageByUrl(url);
         return ResponseEntity.ok(pageDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PageDTO>> getAllPages() {
+        List<PageDTO> pageList = pageService.getPages();
+        return ResponseEntity.ok(pageList);
     }
 
 }

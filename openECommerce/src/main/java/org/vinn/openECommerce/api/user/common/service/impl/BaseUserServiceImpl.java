@@ -67,15 +67,37 @@ public abstract class BaseUserServiceImpl<T, DTO, AddDTO, UpdateDTO> implements 
     }
 
     protected String generateUniqueUsername(String name) {
-        String baseUsername = name.trim().replaceAll("\\s+", "").toLowerCase();
+        String baseUsername = generateBaseUsername(name);
         String username = baseUsername;
         int counter = 1;
 
         while (isUsernameExists(username)) {
-            username = baseUsername + counter++;
+            username = baseUsername + ++counter;
+        }
+
+        if (counter == 1) {
+            username = baseUsername + counter;
         }
 
         return username;
+    }
+
+    /**
+     * Generates the base username by extracting initials and appending the last part of the name.
+     * The username will be in lowercase and without spaces.
+     */
+    private String generateBaseUsername(String name) {
+        String[] nameParts = name.trim().split("\\s+");
+        StringBuilder usernameBuilder = new StringBuilder();
+
+        for (int i = 0; i < nameParts.length - 1; i++) {
+            usernameBuilder.append(nameParts[i].substring(0, 1).toLowerCase());
+        }
+
+        String lastPart = nameParts[nameParts.length - 1].toLowerCase();
+        usernameBuilder.append(lastPart);
+
+        return usernameBuilder.toString();
     }
 
     protected abstract boolean isUsernameExists(String username);

@@ -1,8 +1,11 @@
 package org.vinn.openECommerce.api.order.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.vinn.openECommerce.api.order.model.Order;
 import org.vinn.openECommerce.api.order.util.OrderStatus;
+
+import java.math.BigDecimal;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     long countByStatus(OrderStatus status);

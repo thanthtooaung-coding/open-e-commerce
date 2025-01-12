@@ -19,6 +19,8 @@ public class PageDTO {
 
     private String imageUrl;
 
+    private Long pageOwnerId;
+
     private Instant createdAt;
 
     private Instant updatedAt;

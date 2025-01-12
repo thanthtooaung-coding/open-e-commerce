@@ -13,10 +13,6 @@ public class AddPageOwnerRequest {
     @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotBlank(message = "Username is mandatory")
-    @Size(min = 5, max = 50, message = "Username must be between 5 and 50 characters")
-    private String username;
-
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Invalid email format")
     private String email;

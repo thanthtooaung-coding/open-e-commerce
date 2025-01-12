@@ -1,7 +1,7 @@
 package org.vinn.openECommerce.api.auditLog.systemAdmin.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.vinn.openECommerce.api.auditLog.systemAdmin.dto.SystemAdminAuditLogDTO;
 import org.vinn.openECommerce.api.auditLog.systemAdmin.model.SystemAdminAuditLog;
@@ -9,16 +9,17 @@ import org.vinn.openECommerce.api.auditLog.systemAdmin.repository.SystemAdminAud
 import org.vinn.openECommerce.api.auditLog.systemAdmin.service.SystemAdminAuditLogService;
 import org.vinn.openECommerce.api.auditLog.systemAdmin.util.SystemAdminAuditLogEntityType;
 
+import java.time.Instant;
+
 @Slf4j
 @Service
+@Transactional
 public class SystemAdminAuditLogServiceImpl implements SystemAdminAuditLogService {
 
     private final SystemAdminAuditLogRepository systemAdminAuditLogRepository;
-    private final ModelMapper modelMapper;
 
-    public SystemAdminAuditLogServiceImpl(SystemAdminAuditLogRepository systemAdminAuditLogRepository, ModelMapper modelMapper) {
+    public SystemAdminAuditLogServiceImpl(SystemAdminAuditLogRepository systemAdminAuditLogRepository) {
         this.systemAdminAuditLogRepository = systemAdminAuditLogRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -32,7 +33,13 @@ public class SystemAdminAuditLogServiceImpl implements SystemAdminAuditLogServic
         SystemAdminAuditLogEntityType systemAdminAuditLogEntityType = systemAdminAuditLogDTO.getSystemAdminAuditLogEntityType();
         String entityId = systemAdminAuditLogDTO.getEntityId();
 
+        SystemAdminAuditLog systemAdminAuditLog = new SystemAdminAuditLog();
+        systemAdminAuditLog.setAction(action);
+        systemAdminAuditLog.setEntityId(entityId);
+        systemAdminAuditLog.setSystemAdminAuditLogEntityType(systemAdminAuditLogEntityType);
+        systemAdminAuditLog.setCreatedAt(Instant.now());
+
         log.atInfo().log("Creating audit log: Action={}, EntityType={}, EntityId={}", action, systemAdminAuditLogEntityType.name(), entityId);
-        systemAdminAuditLogRepository.save(modelMapper.map(systemAdminAuditLogDTO, SystemAdminAuditLog.class));
+        systemAdminAuditLogRepository.save(systemAdminAuditLog);
     }
 }
