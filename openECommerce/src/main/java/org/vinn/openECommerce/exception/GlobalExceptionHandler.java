@@ -57,6 +57,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * Handles UnauthorizedAccessException, thrown when access to a resource is unauthorized.
+     *
+     * @param ex      the UnauthorizedAccessException encountered.
+     * @param request the current web request.
+     * @return a ResponseEntity object containing the error details and the UNAUTHORIZED status.
+     */
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccessException(UnauthorizedAccessException ex, WebRequest request) {
+        return buildResponseEntity(HttpStatus.UNAUTHORIZED, "Access is denied.", ex);
+    }
+
+    /**
      * Handles DuplicateEntityException, thrown when attempting to create an entity that already exists.
      *
      * @param ex      the DuplicateEntityException encountered.
