@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .csrf(AbstractHttpConfigurer::disable)
-            .httpBasic(Customizer.withDefaults())
+//            .httpBasic(Customizer.withDefaults())
             .exceptionHandling(exception -> exception
                     .authenticationEntryPoint(authenticationEntryPoint)
             )
